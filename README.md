@@ -7,18 +7,6 @@
 * [Story](#story)
 * [Credits](#credits)
 
-## <a name='overview'>Rules</a>
-
-* You **MUST** create a **PUBLIC** git repository named `facebook-api`
-* You **MUST** return the project before Friday February 2022, 25 at 23:42. Add your GitHub link
-* You **MUST** create a file called `.author` with your username followed by a newline:
-```sh
-~/efrei/facebook-api ❯❯❯ cat -e .author
-{
-  firstName: "Dylan",
-  lastName: "DE SOUSA"
-}
-```
 
 ## <a name='story'>Story</a>
 You have to implement a **REST API**.
