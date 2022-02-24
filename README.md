@@ -1,16 +1,6 @@
 # facebook_api
  Simon Bredeche Facebook API ! 
 
-## <p>Summary</a>
-
-* [Rules](#rules)
-* [Story](#story)
-* [Credits](#credits)
-
-
-## <a name='story'>Story</a>
-You have to implement a **REST API**.
-Please follow the **models** and the **requirements** carefully.
 
 ## Prisma Models
 
