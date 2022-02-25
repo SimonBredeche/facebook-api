@@ -49,6 +49,14 @@ export const updateById = async({id,message,updatedAt}) => {
     });
 }
 
+export const deleteByAuthorId = async (authorId) => {
+   return prisma.post.deleteMany({
+      where:{
+         authorId: authorId
+      }
+   })
+}
+
 export const deleteById = async(id) => {
    return prisma.post.delete({
       where:{
