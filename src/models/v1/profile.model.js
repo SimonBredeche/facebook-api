@@ -43,10 +43,10 @@ export const updateById = async({id,firstName,lastName}) => {
     });
 }
 
-export const deleteById = async(id) => {
+export const deleteById = async(userId) => {
    return prisma.profile.delete({
       where:{
-         id
+         userId : userId
       }
    })
 }

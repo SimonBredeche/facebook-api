@@ -1,3 +1,4 @@
+import { prisma } from '@prisma/client';
 import * as PostsModel from '../../models/v1/posts.model.js';
 
 export const getAll = async (_request, response) => {

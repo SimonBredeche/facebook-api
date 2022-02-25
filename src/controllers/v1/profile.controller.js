@@ -23,7 +23,7 @@ export const getById = async(_request, response) => {
 
 export const deleteById = async(_request, response) => {
   const id = _request.params.id;
-  const profile = await ProfileModel.deleteById(Number(id))
+  const profile = await ProfileModel.deleteById(id)
   response.json({});
 
 }
