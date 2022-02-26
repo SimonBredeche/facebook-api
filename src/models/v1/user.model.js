@@ -12,12 +12,25 @@ export const findByCredentials = async ({email,password}) => {
     })
 }
 
+export const getUserByEmail = async (email) => {
+    return prisma.user.findMany({
+        where:{
+            email:email
+        }
+    })
+}
 
 export const createUser = async ({email,password,createdAt,updatedAt}) => {
     return prisma.user.create({
         data:{
            email,
            password,
+           Profile:{
+                create:{
+                    firstName: '',
+                    lastName: ''
+                }
+           },
            createdAt,
            updatedAt
         }

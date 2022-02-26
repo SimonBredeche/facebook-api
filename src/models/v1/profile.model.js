@@ -2,21 +2,14 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 
-export const upsertProfile = async({firstName,lastName,userId}) => {
-   return prisma.profile.upsert({
+export const updateProfile = async({firstName,lastName,userId}) => {
+   return prisma.profile.update({
       where:{
          userId: userId,
       },
-      update:{
+      data:{
          firstName: firstName,
          lastName: lastName,
-      },
-      create:{
-         firstName,
-         lastName,
-         User:{ 
-            connect: {id: userId},
-         }
       }
    })
 

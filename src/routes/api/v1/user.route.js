@@ -7,7 +7,7 @@ const api = Router();
 
 api.get('/:id/posts',postController.getByAuthorId)
 api.get('/:id/profile',profileController.getById)
-api.patch('/:id/profile',profileController.upsertProfile);
+api.patch('/:id/profile',profileController.updateProfile);
 api.delete('/:id',userController.deleteById)
 
 

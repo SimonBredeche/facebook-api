@@ -1,6 +1,6 @@
 import { Router } from "express";
 import posts from "./posts.route.js"
-import auth from "./authentification.route.js"
+import auth from "./authentication.route.js"
 import user from "./user.route"
 import jwt from '../../../middlewares/jwt.middleware';
 

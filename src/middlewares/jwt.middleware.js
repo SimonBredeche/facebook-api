@@ -5,7 +5,6 @@ const jwtMiddleware = (request, response, next) => {
   
   try {
     const payload = jwt.verify(token, 'SECRET');
-    /** TODO: Find user by id from Payload */
     request.user = payload;
 
     next();

@@ -1,10 +1,10 @@
 import * as ProfileModel from '../../models/v1/profile.model';
 
 
-export const upsertProfile = async (_request,response) => {
+export const updateProfile = async (_request,response) => {
     const profileData = _request.body;
     const {id} = _request.params;
-    const profile = await ProfileModel.upsertProfile({
+    const profile = await ProfileModel.updateProfile({
         firstName: profileData.firstName ,
         lastName: profileData.lastName,
         userId: id
