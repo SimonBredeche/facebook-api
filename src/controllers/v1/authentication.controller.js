@@ -7,7 +7,7 @@ export const login = async (request,response,next) => {
     const { email, password } = request.body;
     const user = await UserModel.findByCredentials({email:email, password:password});
     if(user != null){
-      token = jwt.sign({ email: user.email }, 'SECRET');
+      token = jwt.sign({ id: user.id }, 'SECRET');
       response.json({
         user: user,
         token

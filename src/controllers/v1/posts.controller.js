@@ -1,5 +1,6 @@
 import { prisma } from '@prisma/client';
 import * as PostsModel from '../../models/v1/posts.model.js';
+import {HttpException, HttpStatus } from '../../errors/errors'
 
 export const getAll = async (_request, response) => {
     response.json({
@@ -13,14 +14,13 @@ export const createPosts = async (_request,response) => {
         message: postsData.message,
         createdAt: new Date(),
         updatedAt: new Date(),
-        authorId: postsData.authorId
+        authorId: _request.user.id
     });
     response.status(201).json(post);
 }
 
 export const getById = async(_request, response) => {
   const id = _request.params.id;
-  
   response.json({
     post: await PostsModel.getById(Number(id))
   })
@@ -36,24 +36,35 @@ export const getByAuthorId = async(_request, response) => {
 
 }
 
-export const updatePosts = async (_request, response) => {
+export const updatePosts = async (_request, response,next) => {
   const postsData = _request.body;
   const {id} = _request.params;
-
-  const posts = await PostsModel.updateById({
-    id: Number(id),
-    message: postsData.message,
-    updatedAt: new Date()
-  })
-  response.json({ posts });
+  const checkPost = await PostsModel.getById(Number(id));
+  if(checkPost == null){
+    next(new HttpException('Posts not found', HttpStatus.NOT_FOUND));
+  }
+  else if(checkPost.authorId == _request.user.id){
+    const posts = await PostsModel.updateById({
+      id: Number(id),
+      message: postsData.message,
+      updatedAt: new Date()
+    })
+    response.json({ posts });
+  }else{
+    next(new HttpException('You do not own this post', HttpStatus.UNAUTHORIZED));
+  }
 }
 
-export const deleteById = async (_request, response) => {
+export const deleteById = async (_request, response,next) => {
   const {id} = _request.params;
-  if(!Number.isInteger(+id)){
-    response.json({error: "ID not provided"})
+  const checkPost = await PostsModel.getById(Number(id));
+  if(checkPost == null){
+    next(new HttpException('Posts not found', HttpStatus.NOT_FOUND));
+  }
+  else if(checkPost.authorId == _request.user.id){
+    const result = await PostsModel.deleteById(Number(id))
+    response.json({})
   }else{
-   const result = await PostsModel.deleteById(Number(id))
-   response.json({})
+    next(new HttpException('You do not own this post', HttpStatus.UNAUTHORIZED));
   }
 }

@@ -1,20 +1,20 @@
 import jwt from 'jsonwebtoken';
+import * as userModel from '../models/v1/user.model'
+import {HttpException, HttpStatus } from '../errors/errors'
 
-const jwtMiddleware = (request, response, next) => {
+const jwtMiddleware = async(request, response, next) => {
   const { authorization: token } = request.headers;
   
   try {
-    const payload = jwt.verify(token, 'SECRET');
-    request.user = payload;
-
+    const {id} = jwt.verify(token, 'SECRET');
+    const user = await userModel.getById({id});
+    if(!user){
+      next(new HttpException('Invalid token', HttpStatus.UNAUTHORIZED));
+    }
+    request.user = user;
     next();
   } catch (error) {
-    response.status(401).json({
-      error: {
-        code: 'E010',
-        message: 'Unauthorized',
-      },
-    });
+    next(new HttpException('Invalid token', HttpStatus.UNAUTHORIZED));
   }
 }
 
